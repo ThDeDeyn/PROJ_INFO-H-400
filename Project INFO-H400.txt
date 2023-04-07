@@ -1,0 +1,19 @@
+Programme : 
+
+Accès patient & Accès docteur ( menu avec 2 boutons ) 
+Besoin d'un système d'ID
+
+Pour le doc :
+Vois tout les patients, reçoit les messages. 
+Double click sur le patient -> Voir fenêtre custom 
+1. Info générale 
+2. Prescription / traitement 
+3. Suivi : dose de médicament prise + case commentaire + possibilité de réponse
+
+Pour le patient : 
+Vois tout les docteurs, 
+Double click sur le docteur -> Voir fenêtre custom 
+1. Info de contact 
+2. Bouton prise de médoc (qtée, etc) 
+
+
