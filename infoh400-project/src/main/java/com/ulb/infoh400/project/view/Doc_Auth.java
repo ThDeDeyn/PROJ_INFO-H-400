@@ -29,18 +29,15 @@ public class Doc_Auth extends javax.swing.JFrame {
         Doc_PW = new javax.swing.JLabel();
         Doc_ID = new javax.swing.JLabel();
         Doc_IDText = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Doc_PWText = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
         Verify = new javax.swing.JToggleButton();
+        Doc_PWText = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Doc_PW.setText("Password :");
 
         Doc_ID.setText("Doctor ID :");
-
-        jScrollPane1.setViewportView(Doc_PWText);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -59,14 +56,14 @@ public class Doc_Auth extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Doc_IDText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(Doc_PW, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Doc_IDText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Doc_PWText)))
                 .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
@@ -90,9 +87,9 @@ public class Doc_Auth extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Doc_IDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Doc_PW, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Doc_PWText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addComponent(Verify)
                 .addContainerGap())
@@ -125,9 +122,8 @@ public class Doc_Auth extends javax.swing.JFrame {
     private javax.swing.JLabel Doc_ID;
     private javax.swing.JTextField Doc_IDText;
     private javax.swing.JLabel Doc_PW;
-    private javax.swing.JTextPane Doc_PWText;
+    private javax.swing.JPasswordField Doc_PWText;
     private javax.swing.JToggleButton Verify;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
