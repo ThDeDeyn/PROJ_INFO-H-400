@@ -4,7 +4,6 @@
  */
 package com.ulb.infoh400.project.view;
 
-import java.io.Serial;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -120,7 +120,8 @@ public class Doc_Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddPatientButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButActionPerformed
-        // TODO add your handling code here:
+        Doc_AddPatient AddPatPopup = new Doc_AddPatient();
+        AddPatPopup.setVisible(true);
     }//GEN-LAST:event_AddPatientButActionPerformed
 
     /**
