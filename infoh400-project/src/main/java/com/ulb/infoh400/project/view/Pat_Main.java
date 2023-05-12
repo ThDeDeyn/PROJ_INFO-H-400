@@ -48,7 +48,7 @@ public class Pat_Main extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("HealthLink :  Patient window");
+        jLabel2.setText("HealthLink :  My health");
 
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
 

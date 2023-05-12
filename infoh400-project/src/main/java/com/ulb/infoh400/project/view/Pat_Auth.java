@@ -49,7 +49,7 @@ public class Pat_Auth extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Healthcare worker ID window");
+        jLabel1.setText("My Health");
 
         Verify.setText("OK");
         Verify.addActionListener(new java.awt.event.ActionListener() {
