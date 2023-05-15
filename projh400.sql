@@ -5,8 +5,6 @@
 -- Server version	10.1.8-MariaDB
 
 CREATE DATABASE projh400;
-CREATE USER 'projh400'@'localhost' IDENTIFIED BY 'student400';
-GRANT ALL PRIVILEGES ON proj400.* TO 'projh400'@'localhost';
 USE projh400;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
