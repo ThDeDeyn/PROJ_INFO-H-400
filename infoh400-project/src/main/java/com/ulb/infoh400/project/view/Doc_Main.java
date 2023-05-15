@@ -46,8 +46,6 @@ public class Doc_Main extends javax.swing.JFrame {
         AddPatientBut = new javax.swing.JToggleButton();
         RefreshjButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Patient's list");
 
@@ -55,6 +53,11 @@ public class Doc_Main extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        PatientsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatientsListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(PatientsList);
 
@@ -164,6 +167,22 @@ public class Doc_Main extends javax.swing.JFrame {
         //editPatientButton.setEnabled(true);
         //deletePatientButton.setEnabled(true);
     }//GEN-LAST:event_RefreshjButtonActionPerformed
+
+    private void PatientsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientsListMouseClicked
+                
+        if(PatientsList.getSelectedIndex() < 0) { return; }
+        
+        EntityListModel<Patient> model = (EntityListModel) PatientsList.getModel();
+        Patient selected = model.getList().get(PatientsList.getSelectedIndex());
+        
+        if(evt.getClickCount() == 2){
+            Doc_PatDesc PatDesc_PopUp = new Doc_PatDesc(selected);
+            PatDesc_PopUp.setVisible(true);
+        }
+
+        
+        
+    }//GEN-LAST:event_PatientsListMouseClicked
 
     /**
      * @param args the command line arguments
