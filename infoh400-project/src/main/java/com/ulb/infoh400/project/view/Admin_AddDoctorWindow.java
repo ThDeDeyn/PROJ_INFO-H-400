@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  * @author Adrien Foucart
  */
 public class Admin_AddDoctorWindow extends javax.swing.JFrame {
-    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("infoh400_PU");
+    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final DoctorJpaController doctorCtrl = new DoctorJpaController(emfac);
     private final PersonJpaController personCtrl = new PersonJpaController(emfac);
     
