@@ -4,6 +4,8 @@
  */
 package com.ulb.infoh400.project.view;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author thoma
@@ -108,6 +110,7 @@ public class Doc_Auth extends javax.swing.JFrame {
             if("".equals(Doc_PWText.getText())){
                 Doc_Main DocMainPopup = new Doc_Main(); 
                 DocMainPopup.setVisible(true);
+                DocMainPopup.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 this.dispose(); 
             }
         }

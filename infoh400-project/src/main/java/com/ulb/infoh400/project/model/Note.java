@@ -72,6 +72,7 @@ public class Note implements Serializable {
     public void setIdnote(Integer idnote) {
         this.idnote = idnote;
     }
+    
 
     public Date getDateadded() {
         return dateadded;
@@ -84,7 +85,7 @@ public class Note implements Serializable {
     public String getContent() {
         return content;
     }
-
+    
     public void setContent(String content) {
         this.content = content;
     }
@@ -116,6 +117,15 @@ public class Note implements Serializable {
         }
         return true;
     }
+    public String getType(){
+        System.out.println(content.charAt(0));
+        System.out.println("0");
+        if("0".equals(content.charAt(0))){
+            return "presc";
+        }
+        
+        return "msg";
+    } 
 
     @Override
     public String toString() {
