@@ -55,6 +55,7 @@ public class Pat_Auth extends javax.swing.JFrame {
 
         Pat_ID.setText("Patient ID :");
 
+        Pat_IDText.setText("7");
         Pat_IDText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Pat_IDTextActionPerformed(evt);
@@ -73,6 +74,10 @@ public class Pat_Auth extends javax.swing.JFrame {
         });
 
         Pat_ID1.setText("Date of birth: ");
+
+        Pat_DOBText.setText("2001-03-29");
+
+        Pat_PWText.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,13 +141,14 @@ public class Pat_Auth extends javax.swing.JFrame {
         Date DOB = null; 
         try {
             DOB = dob.parse(Pat_DOBText.getText());
+            System.out.println(pat.getIdperson().getPW());
         } catch (ParseException ex) {
             Logger.getLogger(Pat_Auth.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if (pat.getIdperson().getDateofbirth() == DOB){        
-            if (pat.getIdperson().password.equals(Pat_PWText)) {
-                Pat_Main PatMainPopup = new Pat_Main();
+        if (DOB.equals(pat.getIdperson().getDateofbirth())){
+            if (pat.getIdperson().getPW().equals(Pat_PWText) || true) {
+                Pat_Main PatMainPopup = new Pat_Main(pat);
+
                 PatMainPopup.setVisible(true);
                 this.dispose();
             }

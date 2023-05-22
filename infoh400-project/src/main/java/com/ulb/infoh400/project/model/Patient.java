@@ -54,7 +54,7 @@ public class Patient implements Serializable {
     @ManyToOne(optional = false)
     private Person idperson;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpatient")
-    private List<Appointment> appointmentList;
+    private List<Appointment> appointmentList; 
 
     public Patient() {
     }
@@ -142,5 +142,5 @@ public class Patient implements Serializable {
     public String toString() {
         return idperson.toString();
     }
-    
+
 }

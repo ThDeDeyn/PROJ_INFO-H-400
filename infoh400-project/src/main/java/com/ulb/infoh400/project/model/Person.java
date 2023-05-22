@@ -59,6 +59,7 @@ public class Person implements Serializable {
     private List<Doctor> doctorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperson")
     private List<Patient> patientList;
+    private String password; 
 
     public Person() {
     }
@@ -142,5 +143,6 @@ public class Person implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         return familyname.toUpperCase() + " " + firstname + " (" + fmt.format(dateofbirth) + ")";
     }
-    
+    public void setPW(String PW){ this.password = PW; }
+    public String getPW() {return this.password;}
 }

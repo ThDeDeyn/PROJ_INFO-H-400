@@ -17,21 +17,24 @@ import javax.persistence.Persistence;
  */
 public class Pat_Main extends javax.swing.JFrame {
     
-    String selectedList = ""; 
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final DoctorJpaController doctorCtrl = new DoctorJpaController(emfac);
+    private final Patient patient; 
 
     /**
      * Creates new form Doc_Main
+     * @param pat
      */
-    public Pat_Main() {
+    public Pat_Main(Patient pat) {
         initComponents();
         refreshDoctorList();
+        
+        patient = pat;
+        jLabel2.setText("Welcome " + pat.getIdperson().getFirstname());
     }
     private void refreshDoctorList(){
         List doctors = doctorCtrl.findDoctorEntities();
         EntityListModel<Doctor> model = new EntityListModel(doctors);
-        
         DoctorsList.setModel(model);
     }
 
@@ -60,7 +63,8 @@ public class Pat_Main extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("HealthLink :  Patient Window");
+        jLabel2.setText("Welcome !");
+
 
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
 
@@ -139,15 +143,13 @@ public class Pat_Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(RefreshjButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 245, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
