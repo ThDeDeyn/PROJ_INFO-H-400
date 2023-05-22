@@ -46,7 +46,7 @@ public class NoteJpaController implements Serializable {
             if (idappointment != null) {
                 idappointment.getNoteList().add(note);
                 idappointment = em.merge(idappointment);
-            }
+            }            
             em.getTransaction().commit();
         } finally {
             if (em != null) {

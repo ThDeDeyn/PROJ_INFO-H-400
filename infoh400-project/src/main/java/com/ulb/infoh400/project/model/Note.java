@@ -52,7 +52,8 @@ public class Note implements Serializable {
     @JoinColumn(name = "idappointment", referencedColumnName = "idappointment")
     @ManyToOne
     private Appointment idappointment;
-
+    private Integer patientkey; 
+    private Integer dockey; 
     public Note() {
     }
 
@@ -64,7 +65,13 @@ public class Note implements Serializable {
         this.idnote = idnote;
         this.dateadded = dateadded;
     }
-
+    
+    public Integer getPatientKey(){ return patientkey;}
+    public Integer getDoctorKey(){ return dockey;}
+    
+    public void setDoctorKey(Integer DK){ this.dockey = DK;}
+    public void setPatientKey(Integer PK){ this.patientkey = PK;}
+    
     public Integer getIdnote() {
         return idnote;
     }
@@ -131,5 +138,4 @@ public class Note implements Serializable {
     public String toString() {
         return "ulb.lisa.infoh400.labs2022.model.Note[ idnote=" + idnote + " ]";
     }
-    
 }

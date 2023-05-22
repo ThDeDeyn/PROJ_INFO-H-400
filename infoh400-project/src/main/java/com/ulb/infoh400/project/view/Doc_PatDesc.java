@@ -18,6 +18,8 @@ import javax.persistence.Persistence;
 public class Doc_PatDesc extends javax.swing.JFrame {
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final NoteJpaController noteCtrl = new NoteJpaController(emfac);
+    private Integer pID = null; 
+    private final Patient patient; 
     /**
      * Creates new form Doc_PatDesc
      * @param pat
@@ -27,6 +29,9 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         
         NameLabel.setText( pat.getIdperson().getFamilyname().toUpperCase() + "  " + pat.getIdperson().getFirstname());
         DOBLabel.setText(pat.getIdperson().getDateofbirth().toString());
+        pID = pat.getIdperson().getIdperson(); 
+        patient = pat; 
+    
     }
 
     /**
@@ -193,7 +198,7 @@ public class Doc_PatDesc extends javax.swing.JFrame {
 
     private void NewPrescButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPrescButtonActionPerformed
         // TODO add your handling code here:
-        Doc_SendPresc Presc_PopUp = new Doc_SendPresc(); 
+        Doc_SendPresc Presc_PopUp = new Doc_SendPresc(patient); 
         Presc_PopUp.setVisible(true);
     }//GEN-LAST:event_NewPrescButtonActionPerformed
 
