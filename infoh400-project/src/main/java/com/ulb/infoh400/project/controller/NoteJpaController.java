@@ -16,8 +16,6 @@ import javax.persistence.criteria.Root;
 import com.ulb.infoh400.project.controller.exceptions.NonexistentEntityException;
 import com.ulb.infoh400.project.model.Appointment;
 import com.ulb.infoh400.project.model.Note;
-import javax.persistence.criteria.Predicate;
-import static jdk.internal.vm.ThreadContainers.root;
 
 /**
  *

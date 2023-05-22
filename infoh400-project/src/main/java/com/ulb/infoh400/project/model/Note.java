@@ -6,7 +6,9 @@
 package com.ulb.infoh400.project.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -139,5 +141,22 @@ public class Note implements Serializable {
     public String toString() {
         String str = "Note : " + idnote + " (" + dateadded + ")";
         return str; 
+    }
+    public List<String> toStrings(){
+
+        String str = content; 
+        Integer firstSeparatorIndex = str.indexOf("||");
+        Integer secondSeparatorIndex = str.indexOf("||", firstSeparatorIndex + 1);
+        String str1 = str.substring(firstSeparatorIndex + 2, secondSeparatorIndex);
+
+        Integer thirdSeparatorIndex = str.indexOf("||", secondSeparatorIndex + 1);
+        String str2 = str.substring(secondSeparatorIndex + 2, thirdSeparatorIndex);
+
+        Integer fourthSeparatorIndex = str.indexOf("&&", thirdSeparatorIndex + 1);
+        String str3 = (str.substring(thirdSeparatorIndex + 2, fourthSeparatorIndex));
+       
+        List<String> L = Arrays.asList(str1, str2, str3);
+        return  ( L ); 
+        
     }
 }

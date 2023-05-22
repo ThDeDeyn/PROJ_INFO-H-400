@@ -16,7 +16,6 @@ import javax.persistence.Persistence;
  */
 public class Doc_Main extends javax.swing.JFrame {
 
-    String selectedList = ""; 
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final PatientJpaController patientCtrl = new PatientJpaController(emfac);
     
