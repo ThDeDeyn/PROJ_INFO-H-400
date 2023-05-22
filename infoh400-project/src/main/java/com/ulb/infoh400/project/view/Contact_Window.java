@@ -154,7 +154,9 @@ public class Contact_Window extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
         }
-        note.setDoctorKey(Integer.valueOf(DoctorIdText.getText())); 
+
+        note.setDockey(DoctorIdText.getText()); 
+
 
         //Save
         NoteCtrl.create(note);

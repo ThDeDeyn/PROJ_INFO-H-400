@@ -65,6 +65,7 @@ public class Pat_Main extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Welcome !");
 
+
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
 
         jLabel4.setText("Any question ? ");
