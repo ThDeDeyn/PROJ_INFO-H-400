@@ -160,7 +160,8 @@ public class Doc_SendNote extends javax.swing.JFrame {
         //Creation
         Note note = new Note(); 
         
-        note.setContent(NoteTextField.getText());
+        String str = NoteTextField.getText();
+        note.setContent("1|| " + str + "&&");
         try {
             note.setDateadded(fmt.parse(DateTextField.getText()));
         } catch (ParseException ex) {

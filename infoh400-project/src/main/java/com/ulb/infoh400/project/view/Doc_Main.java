@@ -16,7 +16,6 @@ import javax.persistence.Persistence;
  */
 public class Doc_Main extends javax.swing.JFrame {
 
-    String selectedList = ""; 
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final PatientJpaController patientCtrl = new PatientJpaController(emfac);
     
@@ -46,6 +45,8 @@ public class Doc_Main extends javax.swing.JFrame {
         RefreshjButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Patient's list");
