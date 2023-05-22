@@ -5,7 +5,6 @@
 package com.ulb.infoh400.project.view;
 
 import com.ulb.infoh400.project.controller.NoteJpaController;
-import com.ulb.infoh400.project.controller.PatientJpaController;
 import com.ulb.infoh400.project.model.Note;
 import com.ulb.infoh400.project.model.Patient;
 import java.util.List;
@@ -21,6 +20,7 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     private final NoteJpaController noteCtrl = new NoteJpaController(emfac);
     /**
      * Creates new form Doc_PatDesc
+     * @param pat
      */
     public Doc_PatDesc( Patient pat) {
         initComponents();
