@@ -4,11 +4,25 @@
  */
 package com.ulb.infoh400.project.view;
 
+import com.ulb.infoh400.project.controller.PatientJpaController;
+import com.ulb.infoh400.project.model.Patient;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
- * @author thoma
+ * @author Kiên
  */
 public class Pat_Auth extends javax.swing.JFrame {
+    
+    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
+    private final PatientJpaController patientCtrl = new PatientJpaController(emfac);
+    private final SimpleDateFormat dob = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Creates new form Doc_Auth
@@ -116,16 +130,25 @@ public class Pat_Auth extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerifyActionPerformed
-        if("".equals(Pat_IDText.getText())){
-            if("".equals(Pat_PWText.getText())){
-                if("".equals(Pat_DOBText.getText())){
-                    Pat_Main PatMainPopup = new Pat_Main(); 
-                    PatMainPopup.setVisible(true);
-                    this.dispose();                 
-                }
-
-            }
+        
+        Integer patientID = Integer.valueOf(Pat_IDText.getText()) ;
+        Patient pat = patientCtrl.findPatient(patientID) ;
+        Date DOB = null; 
+        try {
+            DOB = dob.parse(Pat_DOBText.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(Pat_Auth.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if (pat.getIdperson().getDateofbirth() == DOB){        
+            if (pat.getIdperson().password.equals(Pat_PWText)) {
+                Pat_Main PatMainPopup = new Pat_Main();
+                PatMainPopup.setVisible(true);
+                this.dispose();
+            }
+            else {System.out.println("Wrong password, please try again.");}
+        }
+        else {System.out.println("The date of birth doesn't correspond to the patient ID");}
     }//GEN-LAST:event_VerifyActionPerformed
 
     private void Pat_IDTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pat_IDTextActionPerformed

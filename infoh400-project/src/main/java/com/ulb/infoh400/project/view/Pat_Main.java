@@ -4,17 +4,35 @@
  */
 package com.ulb.infoh400.project.view;
 
+import com.ulb.infoh400.project.controller.DoctorJpaController;
+import com.ulb.infoh400.project.model.Doctor;
+import com.ulb.infoh400.project.model.Patient;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
- * @author thoma
+ * @author Kiên
  */
 public class Pat_Main extends javax.swing.JFrame {
+    
+    String selectedList = ""; 
+    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
+    private final DoctorJpaController doctorCtrl = new DoctorJpaController(emfac);
 
     /**
      * Creates new form Doc_Main
      */
     public Pat_Main() {
         initComponents();
+        refreshDoctorList();
+    }
+    private void refreshDoctorList(){
+        List doctors = doctorCtrl.findDoctorEntities();
+        EntityListModel<Doctor> model = new EntityListModel(doctors);
+        
+        DoctorsList.setModel(model);
     }
 
     /**
@@ -27,37 +45,31 @@ public class Pat_Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        PatientsList = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        AddPatientBut = new javax.swing.JToggleButton();
+        ContactBut = new javax.swing.JToggleButton();
+        RefreshjButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        DoctorsList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Specialists list");
 
-        PatientsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(PatientsList);
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("HealthLink :  My health");
+        jLabel2.setText("HealthLink :  Patient Window");
 
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
 
         jLabel4.setText("Any question ? ");
 
-        AddPatientBut.setText("Contact");
-        AddPatientBut.addActionListener(new java.awt.event.ActionListener() {
+        ContactBut.setText("Contact");
+        ContactBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddPatientButActionPerformed(evt);
+                ContactButActionPerformed(evt);
             }
         });
 
@@ -69,7 +81,7 @@ public class Pat_Main extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(AddPatientBut, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ContactBut, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -78,9 +90,28 @@ public class Pat_Main extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(AddPatientBut))
+                    .addComponent(ContactBut))
                 .addGap(11, 11, 11))
         );
+
+        RefreshjButton.setText("Refresh");
+        RefreshjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshjButtonActionPerformed(evt);
+            }
+        });
+
+        DoctorsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        DoctorsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DoctorsListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(DoctorsList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,9 +120,13 @@ public class Pat_Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(RefreshjButton)
+                        .addGap(0, 57, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -107,11 +142,14 @@ public class Pat_Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RefreshjButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 245, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -119,9 +157,29 @@ public class Pat_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AddPatientButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPatientButActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddPatientButActionPerformed
+    private void ContactButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactButActionPerformed
+        Contact_Window contact_wdw = new Contact_Window() ;
+        contact_wdw.setVisible(true) ;
+    }//GEN-LAST:event_ContactButActionPerformed
+
+    private void RefreshjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshjButtonActionPerformed
+
+        refreshDoctorList();
+    }//GEN-LAST:event_RefreshjButtonActionPerformed
+
+    private void DoctorsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DoctorsListMouseClicked
+
+        if(DoctorsList.getSelectedIndex() < 0) { return; }
+
+        EntityListModel<Doctor> model = (EntityListModel) DoctorsList.getModel();
+        Doctor selected = model.getList().get(DoctorsList.getSelectedIndex());
+
+        if(evt.getClickCount() == 2){
+            Pat_DocDesc DocDesc_PopUp = new Pat_DocDesc(selected);
+            DocDesc_PopUp.setVisible(true);
+        }
+
+    }//GEN-LAST:event_DoctorsListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -129,8 +187,9 @@ public class Pat_Main extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton AddPatientBut;
-    private javax.swing.JList<String> PatientsList;
+    private javax.swing.JToggleButton ContactBut;
+    private javax.swing.JList<String> DoctorsList;
+    private javax.swing.JButton RefreshjButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

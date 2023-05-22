@@ -164,8 +164,8 @@ public class StartWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_StartDoctorActionPerformed
 
     private void StartPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartPatientActionPerformed
-        Pat_Auth PathAuthPopup = new Pat_Auth();
-        PathAuthPopup.setVisible(true); // Opens the window asking for ID and password
+        Pat_Auth PatAuthPopup = new Pat_Auth();
+        PatAuthPopup.setVisible(true); // Opens the window asking for ID and password
         this.dispose(); // Close the start Window
     }//GEN-LAST:event_StartPatientActionPerformed
 
