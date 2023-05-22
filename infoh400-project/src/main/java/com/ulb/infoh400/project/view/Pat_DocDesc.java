@@ -7,6 +7,7 @@ package com.ulb.infoh400.project.view;
 import com.ulb.infoh400.project.controller.NoteJpaController;
 import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
+import com.ulb.infoh400.project.model.Patient;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,12 +19,16 @@ import javax.persistence.Persistence;
 public class Pat_DocDesc extends javax.swing.JFrame {
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final NoteJpaController noteCtrl = new NoteJpaController(emfac);
+    private final Patient patient; 
+    private final Doctor doctor; 
     /**
      * Creates new form Pat_DocDesc
      */
-    public Pat_DocDesc(Doctor doc) {
+    public Pat_DocDesc(Doctor doc, Patient pat) {
         initComponents();
         
+        patient = pat; 
+        doctor = doc; 
         NameLabel.setText( doc.getIdperson().getFamilyname().toUpperCase() + "  " + doc.getIdperson().getFirstname());
         SpecialtyLabel.setText(doc.getSpecialty());
     }
@@ -39,7 +44,7 @@ public class Pat_DocDesc extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        NotesList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         NewMsgButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -58,12 +63,12 @@ public class Pat_DocDesc extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Patient details");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        NotesList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(NotesList);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Messaging service");
@@ -177,42 +182,29 @@ public class Pat_DocDesc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void NewMsgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewMsgButtonActionPerformed
-        Doc_SendNote NotePopUp = new Doc_SendNote();
+        Doc_SendNote NotePopUp = new Doc_SendNote(doctor, patient);
         NotePopUp.setVisible(true);
     }//GEN-LAST:event_NewMsgButtonActionPerformed
-
-    private void updatePrescList(){
+    
+    private List<Note> updateNoteList(String str){
 
         List<Note> notes = noteCtrl.findNoteEntities();
-        List<Note> presc = null; 
-        for(int i = 0; i < notes.size() ; i++){  
-            System.out.println(notes.get(i).getType());
-            if("presc".equals(notes.get(i).getType())){
-                presc.add(notes.get(i));
-            }
+        for(int i = 0; i < notes.size() ;){  
+            System.out.println( "notes = " + notes.get(i).getPatientKey());
+            System.out.println( "patient = " + patient.getIdperson());
+            
+            if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
+                i++;
+            }else{ notes.remove(i); }
         }
-        EntityListModel<Note> model = new EntityListModel(presc);
-        
-        prescList.setModel(model);
+        return notes;
     }
-    
-    private void updateMsg(){
-
-        List<Note> notes = noteCtrl.findNoteEntities();
-        List<String> msg = null; 
-        for(int i = 0; i < notes.size() ; i++){  
-            if("msg".equals(notes.get(i).getType())){
-                msg.add(notes.get(i).getContent().substring(3));
-            }
-        }
-        EntityListModel<String> model = new EntityListModel(msg);
-        
-        prescList.setModel(model);
-    }
-    
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
-        updatePrescList();
-        updateMsg() ;
+        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
+        NotesList.setModel(model);
+        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));        
+        prescList.setModel(model2);
+        
     }//GEN-LAST:event_RefreshActionPerformed
 
     /**
@@ -223,6 +215,7 @@ public class Pat_DocDesc extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NameLabel;
     private javax.swing.JButton NewMsgButton;
+    private javax.swing.JList<String> NotesList;
     private javax.swing.JButton Refresh;
     private javax.swing.JLabel SpecialtyLabel;
     private javax.swing.JLabel jLabel1;
@@ -230,7 +223,6 @@ public class Pat_DocDesc extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<String> prescList;

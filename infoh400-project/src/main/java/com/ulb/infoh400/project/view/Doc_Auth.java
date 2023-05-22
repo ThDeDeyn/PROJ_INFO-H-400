@@ -4,6 +4,10 @@
  */
 package com.ulb.infoh400.project.view;
 
+import com.ulb.infoh400.project.controller.DoctorJpaController;
+import com.ulb.infoh400.project.model.Doctor;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JFrame;
 
 /**
@@ -11,12 +15,17 @@ import javax.swing.JFrame;
  * @author thoma
  */
 public class Doc_Auth extends javax.swing.JFrame {
+    private Doctor doctor; 
+    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
+    private final DoctorJpaController doctorCtrl = new DoctorJpaController(emfac); 
 
     /**
      * Creates new form Doc_Auth
      */
     public Doc_Auth() {
         initComponents();
+        
+        doctor = doctorCtrl.findDoctor(1) ;
     }
 
     /**
@@ -108,7 +117,7 @@ public class Doc_Auth extends javax.swing.JFrame {
     private void VerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerifyActionPerformed
         if("".equals(Doc_IDText.getText())){
             if("".equals(Doc_PWText.getText())){
-                Doc_Main DocMainPopup = new Doc_Main(); 
+                Doc_Main DocMainPopup = new Doc_Main(doctor); 
                 DocMainPopup.setVisible(true);
                 DocMainPopup.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 this.dispose(); 

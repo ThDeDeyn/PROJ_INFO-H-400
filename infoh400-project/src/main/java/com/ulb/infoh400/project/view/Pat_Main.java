@@ -177,7 +177,7 @@ public class Pat_Main extends javax.swing.JFrame {
         Doctor selected = model.getList().get(DoctorsList.getSelectedIndex());
 
         if(evt.getClickCount() == 2){
-            Pat_DocDesc DocDesc_PopUp = new Pat_DocDesc(selected);
+            Pat_DocDesc DocDesc_PopUp = new Pat_DocDesc(selected, patient);
             DocDesc_PopUp.setVisible(true);
         }
 

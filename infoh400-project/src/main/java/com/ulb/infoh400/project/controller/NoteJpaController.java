@@ -46,7 +46,7 @@ public class NoteJpaController implements Serializable {
             if (idappointment != null) {
                 idappointment.getNoteList().add(note);
                 idappointment = em.merge(idappointment);
-            }
+            }            
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -133,6 +133,29 @@ public class NoteJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Note.class));
             Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Note> findPrescEntities(Integer pID) {
+        return findPrescEntities(true, -1, -1, pID);
+    }
+    
+    
+    private List<Note> findPrescEntities(boolean all, int maxResults, int firstResult, Integer pID) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Note.class));            
+            Query q = em.createQuery(cq);
+            
+            
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);

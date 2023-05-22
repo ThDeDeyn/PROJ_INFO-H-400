@@ -4,7 +4,9 @@
  */
 package com.ulb.infoh400.project.view;
 
+import com.ulb.infoh400.project.controller.DoctorJpaController;
 import com.ulb.infoh400.project.controller.PatientJpaController;
+import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Patient;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -16,15 +18,18 @@ import javax.persistence.Persistence;
  */
 public class Doc_Main extends javax.swing.JFrame {
 
-    String selectedList = ""; 
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final PatientJpaController patientCtrl = new PatientJpaController(emfac);
+    private final DoctorJpaController doctorCtrl = new DoctorJpaController(emfac);
     
+    private Doctor doctor; 
     /**
+     * 
      * Creates new form Doc_Main
      */
-    public Doc_Main() {
+    public Doc_Main(Doctor doc) {
         initComponents();
+        doctor = doc; 
         refreshPatientList();
     }
 
@@ -46,6 +51,8 @@ public class Doc_Main extends javax.swing.JFrame {
         RefreshjButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Patient's list");
@@ -184,7 +191,7 @@ public class Doc_Main extends javax.swing.JFrame {
         Patient selected = model.getList().get(PatientsList.getSelectedIndex());
         
         if(evt.getClickCount() == 2){
-            Doc_PatDesc PatDesc_PopUp = new Doc_PatDesc(selected);
+            Doc_PatDesc PatDesc_PopUp = new Doc_PatDesc(selected, doctor);
             PatDesc_PopUp.setVisible(true);
         }
 

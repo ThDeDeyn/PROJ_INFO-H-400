@@ -5,7 +5,9 @@
 package com.ulb.infoh400.project.view;
 
 import com.ulb.infoh400.project.controller.NoteJpaController;
+import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
+import com.ulb.infoh400.project.model.Patient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -23,13 +25,17 @@ public class Doc_SendNote extends javax.swing.JFrame {
     private final NoteJpaController NoteCtrl = new NoteJpaController(emfac);
     
     private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+    private final Doctor doctor; 
+    private final Patient patient; 
     /**
      * Creates new form Doc_SendNote
      */
-    public Doc_SendNote() {
+    public Doc_SendNote(Doctor doc, Patient pat) {
         initComponents();
+        
+        doctor = doc; 
+        patient = pat; 
         DateTextField.setText(java.time.LocalDate.now().toString());
-        NoteIDTextField.setText("101");
     }
 
     /**
@@ -45,8 +51,6 @@ public class Doc_SendNote extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         DateTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        NoteIDTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         NoteTextField = new javax.swing.JTextField();
         SendButton = new javax.swing.JButton();
@@ -85,15 +89,6 @@ public class Doc_SendNote extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("ID Note :");
-
-        NoteIDTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NoteIDTextFieldActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Content :");
 
@@ -112,15 +107,12 @@ public class Doc_SendNote extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NoteIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NoteTextField))
+                        .addComponent(NoteTextField)
                         .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(DateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,11 +129,7 @@ public class Doc_SendNote extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SendButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(NoteIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -160,24 +148,21 @@ public class Doc_SendNote extends javax.swing.JFrame {
         //Creation
         Note note = new Note(); 
         
-        note.setContent(NoteTextField.getText());
+        String str = NoteTextField.getText();
+        note.setContent("1|| " + str + "&&");
         try {
             note.setDateadded(fmt.parse(DateTextField.getText()));
         } catch (ParseException ex) {
             Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
         }
-        note.setIdnote(Integer.valueOf(NoteIDTextField.getText()));
-        
+        note.setDoctorKey(2);
+        note.setPatientKey(patient.getIdperson().getIdperson());
         
         //Save 
         NoteCtrl.create(note);
         
         this.dispose(); 
     }//GEN-LAST:event_SendButtonActionPerformed
-
-    private void NoteIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoteIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NoteIDTextFieldActionPerformed
 
     private void DateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateTextFieldActionPerformed
         // TODO add your handling code here:
@@ -189,12 +174,10 @@ public class Doc_SendNote extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DateTextField;
-    private javax.swing.JTextField NoteIDTextField;
     private javax.swing.JTextField NoteTextField;
     private javax.swing.JButton SendButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
