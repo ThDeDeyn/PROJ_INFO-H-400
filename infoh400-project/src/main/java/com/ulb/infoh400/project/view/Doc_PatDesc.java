@@ -5,6 +5,7 @@
 package com.ulb.infoh400.project.view;
 
 import com.ulb.infoh400.project.controller.NoteJpaController;
+import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
 import com.ulb.infoh400.project.model.Patient;
 import java.util.List;
@@ -19,16 +20,18 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final NoteJpaController noteCtrl = new NoteJpaController(emfac);
     private final Patient patient; 
+    private final Doctor doctor; 
     /**
      * Creates new form Doc_PatDesc
      * @param pat
      */
-    public Doc_PatDesc( Patient pat) {
+    public Doc_PatDesc(Patient pat, Doctor doc) {
         initComponents();
         
         NameLabel.setText( pat.getIdperson().getFamilyname().toUpperCase() + "  " + pat.getIdperson().getFirstname());
         DOBLabel.setText(pat.getIdperson().getDateofbirth().toString());
         patient = pat; 
+        doctor = doc; 
         jLabel8.setText("Patient : " + pat.toString());
     
     }
@@ -207,7 +210,7 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void NewMsgButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewMsgButtonActionPerformed
-        Doc_SendNote Doc_NotePopUp = new Doc_SendNote();
+        Doc_SendNote Doc_NotePopUp = new Doc_SendNote(doctor, patient);
         Doc_NotePopUp.setVisible(true);        
     }//GEN-LAST:event_NewMsgButtonActionPerformed
 

@@ -153,10 +153,7 @@ public class Contact_Window extends javax.swing.JFrame {
             note.setDateadded(fmt.parse(DateTextField.getText()));
         } catch (ParseException ex) {
             Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        note.setDockey(DoctorIdText.getText()); 
-
+        } 
 
         //Save
         NoteCtrl.create(note);
