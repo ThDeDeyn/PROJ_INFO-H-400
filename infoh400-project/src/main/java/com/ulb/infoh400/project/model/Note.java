@@ -126,8 +126,9 @@ public class Note implements Serializable {
     }
     public String getType(){
         System.out.println(content.charAt(0));
-        System.out.println("0");
-        if("0".equals(content.charAt(0))){
+        System.out.println('0');
+        
+        if((content.charAt(0)) == '0'){
             return "presc";
         }
         
@@ -136,6 +137,7 @@ public class Note implements Serializable {
 
     @Override
     public String toString() {
-        return "ulb.lisa.infoh400.labs2022.model.Note[ idnote=" + idnote + " ]";
+        String str = "Note : " + idnote + " (" + dateadded + ")";
+        return str; 
     }
 }

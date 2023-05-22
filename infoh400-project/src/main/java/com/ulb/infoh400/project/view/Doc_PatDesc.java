@@ -18,7 +18,6 @@ import javax.persistence.Persistence;
 public class Doc_PatDesc extends javax.swing.JFrame {
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final NoteJpaController noteCtrl = new NoteJpaController(emfac);
-    private Integer pID = null; 
     private final Patient patient; 
     /**
      * Creates new form Doc_PatDesc
@@ -29,7 +28,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         
         NameLabel.setText( pat.getIdperson().getFamilyname().toUpperCase() + "  " + pat.getIdperson().getFirstname());
         DOBLabel.setText(pat.getIdperson().getDateofbirth().toString());
-        pID = pat.getIdperson().getIdperson(); 
         patient = pat; 
     
     }
@@ -205,14 +203,15 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     private void updatePrescList(){
 
         List<Note> notes = noteCtrl.findNoteEntities();
-        List<Note> presc = null; 
-        for(int i = 0; i < notes.size() ; i++){  
-            System.out.println(notes.get(i).getType());
-            if("presc".equals(notes.get(i).getType())){
-                presc.add(notes.get(i));
-            }
+        for(int i = 0; i < notes.size() ;){  
+            System.out.println( "notes = " + notes.get(i).getPatientKey());
+            System.out.println( "patient = " + patient.getIdperson());
+            
+            if("presc".equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
+                i++;
+            }else{ notes.remove(i); }
         }
-        EntityListModel<Note> model = new EntityListModel(presc);
+        EntityListModel<Note> model = new EntityListModel(notes);
         
         prescList.setModel(model);
     }
