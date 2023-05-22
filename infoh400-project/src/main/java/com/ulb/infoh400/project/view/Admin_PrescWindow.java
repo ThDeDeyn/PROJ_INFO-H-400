@@ -61,7 +61,6 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 204, 255));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Prescription overview");
 
@@ -173,7 +172,7 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose() ;        // TODO add your handling code here:
     }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**

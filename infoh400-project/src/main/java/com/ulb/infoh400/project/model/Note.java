@@ -94,6 +94,9 @@ public class Note implements Serializable {
     public String getContent() {
         return content;
     }
+    public String getMessage() {
+        return content.substring(3,content.length()-2);
+    }
     
     public void setContent(String content) {
         this.content = content;
@@ -159,4 +162,5 @@ public class Note implements Serializable {
         return  ( L ); 
         
     }
+    
 }

@@ -8,6 +8,7 @@ import com.ulb.infoh400.project.controller.NoteJpaController;
 import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
 import com.ulb.infoh400.project.model.Patient;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -224,8 +225,8 @@ public class Doc_PatDesc extends javax.swing.JFrame {
 
         List<Note> notes = noteCtrl.findNoteEntities();
         for(int i = 0; i < notes.size() ;){  
-            System.out.println( "notes = " + notes.get(i).getPatientKey());
-            System.out.println( "patient = " + patient.getIdperson());
+//            System.out.println( "notes = " + notes.get(i).getPatientKey());
+//            System.out.println( "patient = " + patient.getIdperson());
             
             if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
                 i++;
@@ -239,12 +240,22 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     }//GEN-LAST:event_RefreshActionPerformed
 
     private void Refresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Refresh1ActionPerformed
-        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
-        NotesList.setModel(model);
+        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));    
+        List<String> messages =new ArrayList<String>();  
+        
+        for (int j = 0;  j < model.getList().size();j++) {
+            Note note = model.getList().get(j) ;
+            messages.add(note.getDateadded().toString() + " : " + note.getMessage()) ;
+        }
+        
+        EntityListModel<Note> msgList = new EntityListModel(messages) ;
+        
+        NotesList.setModel(msgList);
     }//GEN-LAST:event_Refresh1ActionPerformed
 
     private void prescListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prescListMouseClicked
-                if(prescList.getSelectedIndex() < 0) { return; }
+                
+        if(prescList.getSelectedIndex() < 0) { return; }
         
         EntityListModel<Note> model = (EntityListModel) prescList.getModel();
         Note selected = model.getList().get(prescList.getSelectedIndex());
