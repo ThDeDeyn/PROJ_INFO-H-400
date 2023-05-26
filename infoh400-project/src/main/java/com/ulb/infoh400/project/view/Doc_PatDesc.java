@@ -34,7 +34,8 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         patient = pat; 
         doctor = doc; 
         jLabel8.setText("Patient : " + pat.toString());
-    
+        
+        refresh();
     }
 
     /**
@@ -60,7 +61,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         prescList = new javax.swing.JList<>();
         Refresh = new javax.swing.JButton();
-        Refresh1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,13 +125,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
             }
         });
 
-        Refresh1.setText("Refresh");
-        Refresh1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Refresh1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,12 +133,12 @@ public class Doc_PatDesc extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(NewMsgButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Refresh1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Refresh)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,8 +151,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Refresh)
-                                .addGap(2, 2, 2)
                                 .addComponent(NewPrescButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
@@ -170,7 +161,7 @@ public class Doc_PatDesc extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,15 +181,14 @@ public class Doc_PatDesc extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(NewPrescButton)
-                            .addComponent(Refresh))
+                            .addComponent(NewPrescButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(Refresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Refresh))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,12 +211,17 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         Presc_PopUp.setVisible(true);
     }//GEN-LAST:event_NewPrescButtonActionPerformed
 
+    private void refresh(){
+        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
+        NotesList.setModel(model);
+        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));        
+        prescList.setModel(model2);
+    
+    }
     private List<Note> updateNoteList(String str){
 
         List<Note> notes = noteCtrl.findNoteEntities();
         for(int i = 0; i < notes.size() ;){  
-//            System.out.println( "notes = " + notes.get(i).getPatientKey());
-//            System.out.println( "patient = " + patient.getIdperson());
             
             if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
                 i++;
@@ -234,25 +229,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         }
         return notes;
     }
-    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
-        EntityListModel<Note> model = new EntityListModel(updateNoteList("presc"));        
-        prescList.setModel(model);
-    }//GEN-LAST:event_RefreshActionPerformed
-
-    private void Refresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Refresh1ActionPerformed
-        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));    
-        List<String> messages =new ArrayList<String>();  
-        
-        for (int j = 0;  j < model.getList().size();j++) {
-            Note note = model.getList().get(j) ;
-            messages.add(note.getDateadded().toString() + " : " + note.getMessage()) ;
-        }
-        
-        EntityListModel<Note> msgList = new EntityListModel(messages) ;
-        
-        NotesList.setModel(msgList);
-    }//GEN-LAST:event_Refresh1ActionPerformed
-
     private void prescListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prescListMouseClicked
                 
         if(prescList.getSelectedIndex() < 0) { return; }
@@ -261,10 +237,14 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         Note selected = model.getList().get(prescList.getSelectedIndex());
         
         if(evt.getClickCount() == 2){
-            Admin_PrescWindow Presc_Popup= new Admin_PrescWindow(selected);
+            Admin_PrescWindow Presc_Popup= new Admin_PrescWindow(selected, doctor, patient);
             Presc_Popup.setVisible(true);
         }
     }//GEN-LAST:event_prescListMouseClicked
+
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+        refresh();
+    }//GEN-LAST:event_RefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,7 +257,6 @@ public class Doc_PatDesc extends javax.swing.JFrame {
     private javax.swing.JButton NewPrescButton;
     private javax.swing.JList<String> NotesList;
     private javax.swing.JButton Refresh;
-    private javax.swing.JButton Refresh1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

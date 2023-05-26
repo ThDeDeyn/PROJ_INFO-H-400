@@ -31,6 +31,7 @@ public class Pat_DocDesc extends javax.swing.JFrame {
         doctor = doc; 
         NameLabel.setText( doc.getIdperson().getFamilyname().toUpperCase() + "  " + doc.getIdperson().getFirstname());
         SpecialtyLabel.setText(doc.getSpecialty());
+        refresh();
     }
 
     /**
@@ -90,6 +91,11 @@ public class Pat_DocDesc extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        prescList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prescListMouseClicked(evt);
+            }
         });
         jScrollPane2.setViewportView(prescList);
 
@@ -199,13 +205,29 @@ public class Pat_DocDesc extends javax.swing.JFrame {
         }
         return notes;
     }
-    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+    
+    private void refresh(){
+    
         EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
         NotesList.setModel(model);
         EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));        
-        prescList.setModel(model2);
-        
+        prescList.setModel(model2);}
+    
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+          refresh();     
     }//GEN-LAST:event_RefreshActionPerformed
+
+    private void prescListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prescListMouseClicked
+        if(prescList.getSelectedIndex() < 0) { return; }
+        
+        EntityListModel<Note> model = (EntityListModel) prescList.getModel();
+        Note selected = model.getList().get(prescList.getSelectedIndex());
+        
+        if(evt.getClickCount() == 2){
+            Admin_PrescWindow Presc_Popup= new Admin_PrescWindow(selected, doctor, patient);
+            Presc_Popup.setVisible(true);
+        }
+    }//GEN-LAST:event_prescListMouseClicked
 
     /**
      * @param args the command line arguments
