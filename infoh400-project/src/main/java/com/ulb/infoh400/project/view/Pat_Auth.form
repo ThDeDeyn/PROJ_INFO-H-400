@@ -98,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="Pat_IDText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="7"/>
+        <Property name="text" type="java.lang.String" value="9"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Pat_IDTextActionPerformed"/>
@@ -128,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="Pat_DOBText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="2001-03-29"/>
+        <Property name="text" type="java.lang.String" value="2001-07-27"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="Pat_PWText">

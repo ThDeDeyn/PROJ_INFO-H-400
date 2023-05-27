@@ -4,10 +4,17 @@
  */
 package com.ulb.infoh400.project.view;
 
+import com.ulb.infoh400.project.controller.NoteJpaController;
+import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
-import static java.lang.Integer.parseInt;
-import static java.lang.System.console;
+import com.ulb.infoh400.project.model.Patient;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -15,23 +22,37 @@ import java.util.List;
  */
 public class Admin_PrescWindow extends javax.swing.JFrame {
 
-    private final Note note; 
+    private final Note note;
+    List<String> L; 
+    private final Doctor doctor; 
+    private final Patient patient; 
+    
+    private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
+    private final NoteJpaController NoteCtrl = new NoteJpaController(emfac);
+    
+    private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * Creates new form Admin_PrescWindox
      * @param n
+     * @param doc
+     * @param pat
      */
-    public Admin_PrescWindow(Note n) {
+    public Admin_PrescWindow(Note n, Doctor doc, Patient pat) {
         initComponents();
         
         note = n;
+        L = n.toStrings();
+        patient = pat; 
+        doctor = doc; 
         
         jLabel1.setText(n.getDateadded().toString());
         
-        List<String> L = n.toStrings();
+
         jLabel2.setText(L.get(0));
         jLabel4.setText(L.get(1));
         jLabel5.setText(L.get(2));
        
+        DosesTakenSlider.setMaximum(Integer.parseInt( L.get(2)));
     }
        
     
@@ -55,6 +76,8 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         QtLabel = new javax.swing.JLabel();
+        PosLabel1 = new javax.swing.JLabel();
+        DosesTakenSlider = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -108,39 +131,46 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
         QtLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         QtLabel.setText("Quantity (per day) :");
 
+        PosLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        PosLabel1.setText("Doses taken : ");
+
+        DosesTakenSlider.setPaintTicks(true);
+        DosesTakenSlider.setValue(0);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PosLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(DosesTakenSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CloseButton))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(DateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DrugLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(DateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(DrugLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(PosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(QtLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(QtLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,8 +193,15 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(PosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(98, 98, 98)
-                .addComponent(CloseButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(CloseButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PosLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DosesTakenSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -172,6 +209,25 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+        if(Integer.parseInt(L.get(2))== DosesTakenSlider.getValue()){
+            String msg = "Treatment of patient " + patient.getIdperson().getFamilyname().toUpperCase() + " "
+                + patient.getIdperson().getFirstname() +" is finished. The drug presribed was : " + note.getDrug();
+            Note note = new Note(); 
+        
+            note.setContent("2|| " + msg + "&&");
+            try {
+                note.setDateadded(fmt.parse(java.time.LocalDate.now().toString()));
+            } catch (ParseException ex) {
+                Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            note.setDoctorKey(doctor.getIdperson().getIdperson());
+            note.setPatientKey(patient.getIdperson().getIdperson());
+
+            //Save 
+            NoteCtrl.create(note);
+            }
+        
+        
         this.dispose() ;        // TODO add your handling code here:
     }//GEN-LAST:event_CloseButtonActionPerformed
 
@@ -183,8 +239,10 @@ public class Admin_PrescWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CloseButton;
     private javax.swing.JLabel DateLabel;
+    private javax.swing.JSlider DosesTakenSlider;
     private javax.swing.JLabel DrugLabel;
     private javax.swing.JLabel PosLabel;
+    private javax.swing.JLabel PosLabel1;
     private javax.swing.JLabel QtLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

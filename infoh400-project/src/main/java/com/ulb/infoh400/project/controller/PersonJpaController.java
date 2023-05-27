@@ -41,6 +41,9 @@ public class PersonJpaController implements Serializable {
         if (person.getPatientList() == null) {
             person.setPatientList(new ArrayList<Patient>());
         }
+        if (person.getPW() == null) {
+            person.setPW("0");
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();

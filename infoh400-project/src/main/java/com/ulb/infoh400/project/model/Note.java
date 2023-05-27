@@ -162,5 +162,6 @@ public class Note implements Serializable {
         return  ( L ); 
         
     }
+    public String getDrug(){return (this.toStrings()).get(0);    }
     
 }
