@@ -5,6 +5,7 @@
 package com.ulb.infoh400.project.view;
 
 import com.ulb.infoh400.project.controller.NoteJpaController;
+import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
 import com.ulb.infoh400.project.model.Patient;
 import java.text.ParseException;
@@ -24,16 +25,18 @@ public class Doc_SendPresc extends javax.swing.JFrame {
     private final NoteJpaController NoteCtrl = new NoteJpaController(emfac);
     
     private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+    private final Doctor doctor; 
     private Patient patient; 
     /**
      * Creates new form Doc_SendNote
      */
-    public Doc_SendPresc(Patient pat) {
+    public Doc_SendPresc(Doctor doc,Patient pat) {
         initComponents();
         DateTextField.setText(java.time.LocalDate.now().toString());
         jLabel1.setText("Prescription : " + pat.toString());
         
         patient = pat; 
+        doctor = doc;
     }
 
     /**
@@ -176,7 +179,7 @@ public class Doc_SendPresc extends javax.swing.JFrame {
             Logger.getLogger(Doc_SendPresc.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Since there is only one doctor now
-        note.setDoctorKey(2);
+        note.setDoctorKey(doctor.getIddoctor());
         note.setPatientKey(patient.getIdperson().getIdperson());
         
         //Save 

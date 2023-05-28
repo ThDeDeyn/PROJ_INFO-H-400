@@ -207,15 +207,25 @@ public class Doc_PatDesc extends javax.swing.JFrame {
 
     private void NewPrescButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPrescButtonActionPerformed
         // TODO add your handling code here:
-        Doc_SendPresc Presc_PopUp = new Doc_SendPresc(patient); 
+        Doc_SendPresc Presc_PopUp = new Doc_SendPresc(doctor, patient); 
         Presc_PopUp.setVisible(true);
     }//GEN-LAST:event_NewPrescButtonActionPerformed
 
     private void refresh(){
-        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
-        NotesList.setModel(model);
-        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));        
+        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));
         prescList.setModel(model2);
+
+        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));
+        List<String> messages = new ArrayList<String>();
+
+        for (int j = 0; j < model.getList().size(); j++) {
+            Note note = model.getList().get(j);
+            messages.add(note.getDateadded().toString() + " : " + note.getMessage());
+        }
+
+        EntityListModel<Note> msgList = new EntityListModel(messages);
+
+        NotesList.setModel(msgList);
     
     }
     private List<Note> updateNoteList(String str){
@@ -223,7 +233,7 @@ public class Doc_PatDesc extends javax.swing.JFrame {
         List<Note> notes = noteCtrl.findNoteEntities();
         for(int i = 0; i < notes.size() ;){  
             
-            if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
+            if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson()) && notes.get(i).getDoctorKey().equals(doctor.getIddoctor())){
                 i++;
             }else{ notes.remove(i); }
         }

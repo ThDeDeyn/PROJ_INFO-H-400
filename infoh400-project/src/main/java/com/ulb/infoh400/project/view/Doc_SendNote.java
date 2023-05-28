@@ -155,7 +155,7 @@ public class Doc_SendNote extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
         }
-        note.setDoctorKey(2);
+        note.setDoctorKey(doctor.getIddoctor());
         note.setPatientKey(patient.getIdperson().getIdperson());
         
         //Save 
