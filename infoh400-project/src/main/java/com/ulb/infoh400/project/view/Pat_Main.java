@@ -160,7 +160,7 @@ public class Pat_Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ContactButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactButActionPerformed
-        Contact_Window contact_wdw = new Contact_Window() ;
+        Contact_Window contact_wdw = new Contact_Window(patient) ;
         contact_wdw.setVisible(true) ;
     }//GEN-LAST:event_ContactButActionPerformed
 

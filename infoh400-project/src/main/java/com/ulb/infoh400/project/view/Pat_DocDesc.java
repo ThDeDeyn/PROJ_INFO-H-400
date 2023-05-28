@@ -8,6 +8,7 @@ import com.ulb.infoh400.project.controller.NoteJpaController;
 import com.ulb.infoh400.project.model.Doctor;
 import com.ulb.infoh400.project.model.Note;
 import com.ulb.infoh400.project.model.Patient;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -194,24 +195,37 @@ public class Pat_DocDesc extends javax.swing.JFrame {
     
     private List<Note> updateNoteList(String str){
 
+        //create a list of messages or prescriptions depending on the parameter
         List<Note> notes = noteCtrl.findNoteEntities();
-        for(int i = 0; i < notes.size() ;){  
-            System.out.println( "notes = " + notes.get(i).getPatientKey());
-            System.out.println( "patient = " + patient.getIdperson());
-            
-            if(str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson())){
+        for (int i = 0; i < notes.size();) {
+//            System.out.println( "notes = " + notes.get(i).getPatientKey());
+//            System.out.println( "patient = " + patient.getIdperson());
+
+            if (str.equals(notes.get(i).getType()) && notes.get(i).getPatientKey().equals(patient.getIdperson().getIdperson()) && notes.get(i).getDoctorKey().equals(doctor.getIddoctor())) {
                 i++;
-            }else{ notes.remove(i); }
+            } else {
+                notes.remove(i);
+            }
         }
         return notes;
     }
     
     private void refresh(){
     
-        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));        
-        NotesList.setModel(model);
-        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));        
-        prescList.setModel(model2);}
+        EntityListModel<Note> model = new EntityListModel(updateNoteList("msg"));
+        List<String> messages = new ArrayList<String>();
+
+        for (int j = 0; j < model.getList().size(); j++) {
+            Note note = model.getList().get(j);
+            messages.add(note.getDateadded().toString() + " : " + note.getMessage());
+        }
+
+        EntityListModel<Note> msgList = new EntityListModel(messages);
+
+        NotesList.setModel(msgList); //display only the messages on the left panel
+        EntityListModel<Note> model2 = new EntityListModel(updateNoteList("presc"));
+        prescList.setModel(model2);//display only the prescriptions in the bottom right panel
+    }
     
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
           refresh();     

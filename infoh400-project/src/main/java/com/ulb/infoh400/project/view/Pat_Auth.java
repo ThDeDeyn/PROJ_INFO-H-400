@@ -22,6 +22,7 @@ public class Pat_Auth extends javax.swing.JFrame {
     
     private final EntityManagerFactory emfac = Persistence.createEntityManagerFactory("projh400_PU");
     private final PatientJpaController patientCtrl = new PatientJpaController(emfac);
+    private Patient pat ;
     private final SimpleDateFormat dob = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
@@ -137,7 +138,7 @@ public class Pat_Auth extends javax.swing.JFrame {
     private void VerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerifyActionPerformed
         
         Integer patientID = Integer.valueOf(Pat_IDText.getText()) ;
-        Patient pat = patientCtrl.findPatient(patientID) ;
+        pat = patientCtrl.findPatient(patientID) ;
         Date DOB = null; 
         try {
             DOB = dob.parse(Pat_DOBText.getText());
@@ -145,8 +146,8 @@ public class Pat_Auth extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Pat_Auth.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (DOB.equals(pat.getIdperson().getDateofbirth())){
-            if (pat.getIdperson().getPW().equals(Pat_PWText) || true) {
+        if (DOB.equals(pat.getIdperson().getDateofbirth())){             
+            if (pat.getIdperson().getPW().equals(Pat_PWText.getText())) {
                 Pat_Main PatMainPopup = new Pat_Main(pat);
 
                 PatMainPopup.setVisible(true);

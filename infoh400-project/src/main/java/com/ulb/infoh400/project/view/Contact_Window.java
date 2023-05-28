@@ -6,6 +6,7 @@ package com.ulb.infoh400.project.view;
 
 import com.ulb.infoh400.project.controller.NoteJpaController;
 import com.ulb.infoh400.project.model.Note;
+import com.ulb.infoh400.project.model.Patient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -23,12 +24,13 @@ public class Contact_Window extends javax.swing.JFrame {
     private final NoteJpaController NoteCtrl = new NoteJpaController(emfac);
     
     private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-
+    private final Patient patient; 
     /**
      * Creates new form Contact_Window
      */
-    public Contact_Window() {
+    public Contact_Window(Patient pat) {
         initComponents();
+        patient = pat; 
         DateTextField.setText(java.time.LocalDate.now().toString());
     }
 
@@ -66,7 +68,7 @@ public class Contact_Window extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Physician ID");
+        jLabel4.setText("Physician ID :");
 
         DoctorIdText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,9 +97,9 @@ public class Contact_Window extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(DoctorIdText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,21 +146,24 @@ public class Contact_Window extends javax.swing.JFrame {
 
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
         //Création de la note, + essai de l'enregistrement
-
+        
         //Creation
-        Note note = new Note();
-
-        note.setContent(NoteTextField.getText());
+        Note note = new Note(); 
+        
+        String str = NoteTextField.getText();
+        note.setContent("1|| " + str + "&&");
         try {
             note.setDateadded(fmt.parse(DateTextField.getText()));
         } catch (ParseException ex) {
             Logger.getLogger(Doc_SendNote.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-
-        //Save
+        }
+        note.setDoctorKey(Integer.valueOf(DoctorIdText.getText()));
+        note.setPatientKey(patient.getIdperson().getIdperson());
+        
+        //Save 
         NoteCtrl.create(note);
-
-        this.dispose();
+        
+        this.dispose(); 
     }//GEN-LAST:event_SendButtonActionPerformed
 
     /**
