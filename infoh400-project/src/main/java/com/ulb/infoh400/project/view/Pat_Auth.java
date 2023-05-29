@@ -146,7 +146,7 @@ public class Pat_Auth extends javax.swing.JFrame {
             Logger.getLogger(Pat_Auth.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (DOB.equals(pat.getIdperson().getDateofbirth())){
-            if (pat.getIdperson().getPW().equals(Pat_PWText) || true) {
+            if (pat.getIdperson().getPW().equals(Pat_PWText.getText()) ) {
                 Pat_Main PatMainPopup = new Pat_Main(pat);
 
                 PatMainPopup.setVisible(true);
